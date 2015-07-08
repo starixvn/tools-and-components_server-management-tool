@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<servers>
+  <system name="System 1">
+    <server name="Server 111" ip="10.18.200.111"></server>
+    <server name="Server 112" ip="10.18.200.112"></server>
+  </system>
+  <system name="System 2">
+    <server name="Server 210" ip="10.18.200.210"></server>
+    <server name="Server 209" ip="10.18.200.209"></server>
+    <server name="Server 209" ip="10.18.200.299"></server>
+  </system>
+</servers>

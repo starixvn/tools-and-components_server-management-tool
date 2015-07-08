@@ -1,0 +1,29 @@
+﻿@{
+    ViewBag.Title = "Update User";
+    Layout = null;
+}
+@model ServerManagement.Models.UserModel
+<form>
+<div class="input-control modern text iconic">
+    <input class="full-size" type="text" name="Username" id="Username" value="@Model.Username" />
+    <span class="label">Username</span> <span class="informer">Please enter Username</span>
+</div>
+<div class="input-control modern iconic">
+    <input class="full-size" type="password" name="Password" id="Password" value="@Model.Password"  />
+    <span class="label">Password</span> <span class="informer">Please enter Password</span>
+</div>
+<div class="input-control modern iconic">
+    <input class="full-size" type="text" name="Email" id="Email" value="@Model.Email"  />
+    <span class="label">Email</span> <span class="informer">Please enter email</span>
+</div>
+<br />
+<br />
+<div class="form-actions">
+    <button id="btn-submit" type="button" class="button small-button primary">
+        Submit</button>
+    <button id="btn-cancel" type="button" class="button small-button primary">
+        Cancel</button>
+</div>
+
+<input type="hidden" name="UserId" id="UserId" value="@Model.UserId" />
+</form>

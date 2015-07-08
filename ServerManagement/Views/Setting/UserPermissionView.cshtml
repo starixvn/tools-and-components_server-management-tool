@@ -1,0 +1,32 @@
+﻿@{
+    ViewBag.Title = "UserPermissionView";
+    Layout = null;
+    var userPermission = Model.UserPermission;
+}
+@model ServerManagement.Models.UserSiteViewModel
+@foreach (var permission in userPermission)
+{
+    <tr>
+        <td class="text-align-center">
+            @permission.UserName
+        </td>
+        <td class="text-align-center">
+            <label class="input-control radio small-check">
+                <input class="radio-permission" type="radio" id="rdb-no-access" data-userid="@permission.UserId" data-permission="0" @(permission.Permission == 0 ? "checked=true" : string.Empty) name="rdb-permission-@permission.UserId"/>
+                <span class="check"></span>
+            </label>
+        </td>
+        <td class="text-align-center">
+           <label class="input-control radio small-check">
+                <input class="radio-permission" type="radio" id="rdb-view" data-userid="@permission.UserId" data-permission="1" @(permission.Permission == 1 ? "checked=true" : string.Empty) name="rdb-permission-@permission.UserId"/>
+                <span class="check"></span>
+            </label>
+        </td>
+        <td class="text-align-center">
+           <label class="input-control radio small-check">
+                <input class="radio-permission" type="radio" id="rdb-admin" data-userid="@permission.UserId" data-permission="2" @(permission.Permission == 2 ? "checked=true" : string.Empty) name="rdb-permission-@permission.UserId"/>
+                <span class="check"></span>
+            </label>
+        </td>
+    </tr>
+}

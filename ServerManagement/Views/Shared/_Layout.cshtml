@@ -1,0 +1,298 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/themes/base/css")
+    @Styles.Render("~/Content/css")
+    <style>
+        .tile-area-controls {
+            position: fixed;
+            right: 40px;
+            top: 40px;
+        }
+
+        .tile-group {
+            left: 100px;
+        }
+
+        .tile, .tile-small, .tile-sqaure, .tile-wide, .tile-large, .tile-big, .tile-super {
+            opacity: 0;
+            -webkit-transform: scale(.8);
+            transform: scale(.8);
+        }
+
+        .charm.right-side {
+            width: 200px;
+            right: -300px;
+        }
+
+        #charmSettings .button {
+            margin: 5px;
+        }
+
+        @@media screen and (max-width: 640px) {
+            .tile-area {
+                overflow-y: scroll;
+            }
+            .tile-area-controls {
+                display: none;
+            }
+        }
+
+        @@media screen and (max-width: 320px) {
+            .tile-area {
+                overflow-y: scroll;
+            }
+
+            .tile-area-controls {
+                display: none;
+            }
+
+        }
+    </style>
+</head>
+<body>
+    <div class="charm right-side padding20 bg-grayDark" id="charmSettings">
+        <button class="square-button bg-transparent fg-white no-border place-right small-button"
+            onclick="showColorSetting()">
+            <span class="mif-cross"></span>
+        </button>
+        <h3 class="text-light">
+            Background Color</h3>
+        <hr class="thin" />
+        <br />
+        <div class="schemeButtons">
+            <div class="button square-button tile-area-scheme-dark" data-scheme="dark">
+            </div>
+            <div class="button square-button tile-area-scheme-darkBrown" data-scheme="darkBrown">
+            </div>
+            <div class="button square-button tile-area-scheme-darkCrimson" data-scheme="darkCrimson">
+            </div>
+            <div class="button square-button tile-area-scheme-darkViolet" data-scheme="darkViolet">
+            </div>
+            <div class="button square-button tile-area-scheme-darkMagenta" data-scheme="darkMagenta">
+            </div>
+            <div class="button square-button tile-area-scheme-darkCyan" data-scheme="darkCyan">
+            </div>
+            <div class="button square-button tile-area-scheme-darkCobalt" data-scheme="darkCobalt">
+            </div>
+            <div class="button square-button tile-area-scheme-darkTeal" data-scheme="darkTeal">
+            </div>
+            <div class="button square-button tile-area-scheme-darkEmerald" data-scheme="darkEmerald">
+            </div>
+            <div class="button square-button tile-area-scheme-darkGreen" data-scheme="darkGreen">
+            </div>
+            <div class="button square-button tile-area-scheme-darkOrange" data-scheme="darkOrange">
+            </div>
+            <div class="button square-button tile-area-scheme-darkRed" data-scheme="darkRed">
+            </div>
+            <div class="button square-button tile-area-scheme-darkPink" data-scheme="darkPink">
+            </div>
+            <div class="button square-button tile-area-scheme-darkIndigo" data-scheme="darkIndigo">
+            </div>
+            <div class="button square-button tile-area-scheme-darkBlue" data-scheme="darkBlue">
+            </div>
+            <div class="button square-button tile-area-scheme-lightBlue" data-scheme="lightBlue">
+            </div>
+            <div class="button square-button tile-area-scheme-lightTeal" data-scheme="lightTeal">
+            </div>
+            <div class="button square-button tile-area-scheme-lightOlive" data-scheme="lightOlive">
+            </div>
+            <div class="button square-button tile-area-scheme-lightOrange" data-scheme="lightOrange">
+            </div>
+            <div class="button square-button tile-area-scheme-lightPink" data-scheme="lightPink">
+            </div>
+            <div class="button square-button tile-area-scheme-grayed" data-scheme="grayed">
+            </div>
+        </div>
+    </div>
+    <div class="charm right-side padding20 bg-grayDark" id="ServerSettings">
+        <button class="square-button bg-transparent fg-white no-border place-right small-button"
+            onclick="showSettings()">
+            <span class="mif-cross"></span>
+        </button>
+        <h1 class="text-light">
+            Setting</h1>
+        <hr class="thin" />
+        <br />
+        <div class="setting-container">
+            <div class="button shortcut-button" id="system-setting" title="System Management">
+                <span class="icon mif-layers"></span>
+            </div>
+            <div class="button shortcut-button" id="server-setting" title="Server Management">
+                <span class="icon mif-display"></span>
+            </div>
+            <div class="button shortcut-button" id="system-server-setting" title="System Server Management">
+                <span class="icon mif-shrink2"></span>
+            </div>
+            <div class="button shortcut-button" id="user-setting" title="User Management">
+                <span class="icon mif-users"></span>
+            </div>
+             <div class="button shortcut-button" id="user-permission-setting" title="User Permission Management">
+                <span class="icon mif-magic-wand"></span>
+            </div>
+        </div>
+    </div>
+    @RenderBody()
+    <div id="dialog" class="padding20 dialog" data-windows-style="true" data-close-button="true"
+        data-role="dialog" data-overlay="false">
+        <div class="container">
+            <h1 class="dialog-title">
+                <span></span>
+            </h1>
+            <p class="dialog-content">
+            </p>
+        </div>
+        <span class="dialog-close-button"></span>
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/moment")
+    @Scripts.Render("~/bundles/select2")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/scripts")
+    <script>
+        (function ($) {
+            $.StartScreen = function () {
+                var plugin = this;
+                var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+
+                plugin.init = function () {
+                    setTilesAreaSize();
+                    if (width > 640) addMouseWheel();
+                };
+
+                var setTilesAreaSize = function () {
+                    var groups = $(".tile-group");
+                    var tileAreaWidth = 80;
+                    $.each(groups, function (i, t) {
+                        if (width <= 640) {
+                            tileAreaWidth = width;
+                        } else {
+                            tileAreaWidth += $(t).outerWidth() + 80;
+                        }
+                    });
+                    $(".tile-area").css({
+                        width: tileAreaWidth
+                    });
+                };
+
+                var addMouseWheel = function () {
+                    $("body").mousewheel(function (event, delta, deltaX, deltaY) {
+                        var page = $(document);
+                        var scroll_value = delta * 50;
+                        page.scrollLeft(page.scrollLeft() - scroll_value);
+                        return false;
+                    });
+                };
+
+                plugin.init();
+            }
+        })(jQuery);
+
+        $(function () {
+            $.StartScreen();
+
+            var tiles = $(".tile, .tile-small, .tile-sqaure, .tile-wide, .tile-large, .tile-big, .tile-super");
+
+            $.each(tiles, function () {
+                var tile = $(this);
+                setTimeout(function () {
+                    tile.css({
+                        opacity: 1,
+                        "-webkit-transform": "scale(1)",
+                        "transform": "scale(1)",
+                        "-webkit-transition": ".3s",
+                        "transition": ".3s"
+                    });
+                }, Math.floor(Math.random() * 500));
+            });
+
+            $(".tile-group").animate({
+                left: 0
+            });
+        });
+
+        function showColorSetting() {
+            var charm = $("#charmSettings");
+
+            if (charm.data('hidden') == undefined) { charm.data('hidden', true); }
+
+            if (!charm.data('hidden')) {
+
+                charm.animate({
+                    right: -300
+                });
+
+                charm.data('hidden', true);
+            } else {
+                charm.animate({
+                    right: 0
+                });
+                charm.data('hidden', false);
+            }
+        }
+
+        function showSettings() {
+            var charm = $("#ServerSettings");
+
+            if (charm.data('hidden') == undefined) { charm.data('hidden', true); }
+
+            if (!charm.data('hidden')) {
+
+                charm.animate({
+                    right: -300
+                });
+
+                charm.data('hidden', true);
+            } else {
+                charm.animate({
+                    right: 0
+                });
+                charm.data('hidden', false);
+            }
+        }
+
+        $(function () {
+            var current_tile_area_scheme = localStorage.getItem('tile-area-scheme') || "tile-area-scheme-dark";
+            $(".tile-area").removeClass(function (index, css) {
+                return (css.match(/(^|\s)tile-area-scheme-\S+/g) || []).join(' ');
+            }).addClass(current_tile_area_scheme);
+
+            $(".schemeButtons .button").hover(
+                    function () {
+                        var b = $(this);
+                        var scheme = "tile-area-scheme-" + b.data('scheme');
+                        $(".tile-area").removeClass(function (index, css) {
+                            return (css.match(/(^|\s)tile-area-scheme-\S+/g) || []).join(' ');
+                        }).addClass(scheme);
+                    },
+                    function () {
+                        $(".tile-area").removeClass(function (index, css) {
+                            return (css.match(/(^|\s)tile-area-scheme-\S+/g) || []).join(' ');
+                        }).addClass(current_tile_area_scheme);
+                    }
+            );
+
+            $(".schemeButtons .button").on("click", function () {
+                var b = $(this);
+                var scheme = "tile-area-scheme-" + b.data('scheme');
+
+                $(".tile-area").removeClass(function (index, css) {
+                    return (css.match(/(^|\s)tile-area-scheme-\S+/g) || []).join(' ');
+                }).addClass(scheme);
+
+                current_tile_area_scheme = scheme;
+                localStorage.setItem('tile-area-scheme', scheme);
+
+                showColorSetting();
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        var rootDir = "@Url.Content("~/")";
+    </script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

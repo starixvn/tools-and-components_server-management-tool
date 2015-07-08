@@ -1,0 +1,46 @@
+﻿@{
+    ViewBag.Title = "SystemManagement";
+    Layout = null;
+}
+@model List<ServerManagement.Models.SiteModel>
+<div class="header-action">
+    <button id="btn-add" class="button small-button primary">
+            Add Site</button>
+</div>
+<table>
+    <thead>
+        <tr>
+            <th class="col-id">
+                Id
+            </th>
+            <th>
+                System Name
+            </th>
+            <th>
+                Description
+            </th>
+            <th class="col-edit">
+                Edit
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var site in Model)
+        {
+            <tr>
+                <td class="text-align-center">
+                    @site.SiteId
+                </td>
+                <td>
+                    @site.SiteName
+                </td>
+                <td>
+                    @site.Description
+                </td>
+                <td class="text-align-center">
+                    <span class="mif-pencil icon-edit" system-id="@site.SiteId"></span>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
