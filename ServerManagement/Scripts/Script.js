@@ -6,6 +6,7 @@
         siteObject.selectedServer();
         siteObject.Reboot();
         siteObject.RebootAll();
+        siteObject.SignOut();
     };
 
     siteObject.autoReload = function () {
@@ -24,11 +25,11 @@
                     var formatedTime = moment(formatedDate).format('h:mm A');
 
                     if (val.IsResult) {
-                        $('#server-' + serverSiteId).removeClass('bg-red').addClass('bg-darkCobalt');
+                        $('#server-' + serverSiteId).removeClass('bg-red').addClass('bg-transparent');
                         $('#icon-' + serverSiteId).removeClass('mif-spinner4').addClass('mif-display');
                     }
                     else {
-                        $('#server-' + serverSiteId).removeClass('bg-darkCobalt').addClass('bg-red');
+                        $('#server-' + serverSiteId).removeClass('bg-transparent').addClass('bg-red');
                     }
 
                     $('#time-' + serverSiteId).html(formatedTime);
@@ -54,24 +55,17 @@
 
     siteObject.Reboot = function () {
         $('.mif-undo').on('click', function () {
-
-            var paramIps = [];
-            var paramIds = [];
+            var ServerIds = [];
+            var paramServerIds = [];
             $(".element-selected").each(function () {
                 var $this = $(this);
-                var serverId = $this.attr('id');
-                var serverIp = $this.attr('server-ip');
-                paramIps.push(serverIp);
-                paramIds.push(serverId);
+                var siteId = $this.attr('site-id');
+                var serverId = $this.attr('server-id');
+                paramServerIds.push(siteId + ':' + serverId);
             });
 
-            if (paramIps.length <= 0) {
-                NOTIFY.Alert('Please select at least one server to reboot.', 'Error');
-               // alert('Please select at least one server to reboot.');
-                return;
-            }
 
-            var postingData = { serverIps: paramIps, serverIds: paramIds };
+            var postingData = { serverIds: paramServerIds };
 
             if (confirm("Are you sure you want to reboot server ????")) {
 
@@ -89,7 +83,7 @@
                             var iconId = key.replace('server', 'icon');
                             $('#' + iconId).removeClass('mif-display').addClass('mif-spinner4');
                             if (val.ErrorCode != 0) {
-                                errMsg += val.ErrorMessage + '</br>';
+                                errMsg += key + ': ' + val.ErrorMessage + '</br></br>';
                             }
                         });
 
@@ -103,8 +97,12 @@
                 });
             }
         });
-
     };
+
+ 
+
+
+
 
     siteObject.RebootAll = function () {
         $('.mif-loop2').on('click', function () {
@@ -128,6 +126,21 @@
                     }
                 });
             }
+        });
+    };
+
+    siteObject.SignOut = function () {
+        $('.mif-switch').on('click', function () {
+            $.ajax({
+                url: rootDir + "Authorization/SignOut",
+                type: 'Post',
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    if (data.ErrorCode == 0) {
+                        location.href = rootDir + "Authorization/Login"
+                    }
+                }
+            });
         });
     };
 

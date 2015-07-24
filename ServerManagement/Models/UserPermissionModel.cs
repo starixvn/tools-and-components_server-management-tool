@@ -11,6 +11,8 @@ namespace ServerManagement.Models
 
         public string UserName { get; set; }
 
+        public string AliasName { get; set; }
+
         public int SiteId { get; set; }
 
         public string SiteName { get; set; }

@@ -24,18 +24,29 @@ namespace ServerManagement.Controllers
             _serverSiteService = new ServerSiteService();
             _userSiteService = new UserSiteService();
         }
-
+        
         [HttpGet]
         public ActionResult SystemList()
         {
+            if (!CurrentSession.SuperUser)
+            {
+                return Redirect("~/Authorization/NoAccess");
+            }
+
             var siteList = _siteService.GetSites();
 
             return View(siteList);
+            
         }
 
         [HttpGet]
         public ActionResult UpdateSystem(int siteId = 0)
         {
+            if (!CurrentSession.SuperUser)
+            {
+                return Redirect("~/Authorization/NoAccess");
+            }
+
             var site = new SiteModel();
             if (siteId != 0)
             {
@@ -65,6 +76,11 @@ namespace ServerManagement.Controllers
         [HttpGet]
         public ActionResult ServerList()
         {
+            if (!CurrentSession.SuperUser)
+            {
+                return Redirect("~/Authorization/NoAccess");
+            }
+
             var serverList = _serverService.GetServers();
 
             return View(serverList);
@@ -73,6 +89,11 @@ namespace ServerManagement.Controllers
         [HttpGet]
         public ActionResult UpdateServer(int serverId = 0)
         {
+            if (!CurrentSession.SuperUser)
+            {
+                return Redirect("~/Authorization/NoAccess");
+            }
+
             var server = new ServerModel();
             if (serverId != 0)
             {
@@ -102,6 +123,11 @@ namespace ServerManagement.Controllers
         [HttpGet]
         public ActionResult SystemServerList()
         {
+            if (!CurrentSession.SuperUser)
+            {
+                return Redirect("~/Authorization/NoAccess");
+            }
+
             var siteServerList = _serverSiteService.GetServerSite();
 
             return View(siteServerList);
@@ -110,6 +136,11 @@ namespace ServerManagement.Controllers
         [HttpGet]
         public ActionResult UpdateSystemServer(int id = 0)
         {
+            if (!CurrentSession.SuperUser)
+            {
+                return Redirect("~/Authorization/NoAccess");
+            }
+
             var model = new UpdateServerSiteViewModel
             {
                 Sites = _siteService.GetSites(),
@@ -158,6 +189,11 @@ namespace ServerManagement.Controllers
 
         public ActionResult UsersList(UserModel param)
         {
+            if (!CurrentSession.SuperUser)
+            {
+                return Redirect("~/Authorization/NoAccess");
+            }
+
             var model = _userService.GetUsers();
 
             return View(model);
@@ -166,11 +202,16 @@ namespace ServerManagement.Controllers
         [HttpGet]
         public ActionResult UpdateUser(int userId = 0)
         {
+            if (!CurrentSession.SuperUser)
+            {
+                return Redirect("~/Authorization/NoAccess");
+            }
+
             var user = new UserModel();
             if (userId != 0)
             {
                 user = _userService.GetUsers().Where(x => x.UserId == userId).FirstOrDefault();
-                user.Password = _helper.DecryptStringAES(user.Password);
+                user.AliasName = user.AliasName;
             }
 
             return View(user);
@@ -180,7 +221,6 @@ namespace ServerManagement.Controllers
         public ActionResult UpdateUser(UserModel param)
         {
             var result = new Result();
-            param.Password = _helper.EncryptStringAES(param.Password);
 
             if (param.UserId != 0)
             {
@@ -207,6 +247,11 @@ namespace ServerManagement.Controllers
         [HttpGet]
         public ActionResult UserPermission()
         {
+            if (!CurrentSession.SuperUser)
+            {
+                return Redirect("~/Authorization/NoAccess");
+            }
+
             var sites = _siteService.GetSites();
             var siteId = sites.First().SiteId;
             var userPermission = UserPermission(siteId);
@@ -223,6 +268,11 @@ namespace ServerManagement.Controllers
         [HttpGet]
         public ActionResult UserPermissionView(int siteId)
         {
+            if (!CurrentSession.SuperUser)
+            {
+                return Redirect("~/Authorization/NoAccess");
+            }
+
             var userPermission = UserPermission(siteId);
 
             var model = new UserSiteViewModel

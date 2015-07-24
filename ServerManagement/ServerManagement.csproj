@@ -149,9 +149,14 @@
     <Compile Include="Controllers\Helper.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\JoinExtension.cs" />
+    <Compile Include="Models\SitePermissionViewModel.cs" />
     <Compile Include="Models\UserPermissionModel.cs" />
+    <Compile Include="Models\UserPermissionViewModel.cs" />
     <Compile Include="Models\UserSiteModel.cs" />
     <Compile Include="Models\UserSiteViewModel.cs" />
+    <Compile Include="Services\CustomRoles.cs" />
+    <Compile Include="Services\RolesAttribute.cs" />
+    <Compile Include="Services\SessionService.cs" />
     <Compile Include="Services\UserSiteService.cs" />
     <Compile Include="Services\ServerSiteResultService.cs" />
     <Compile Include="Controllers\SettingController.cs" />
@@ -485,6 +490,7 @@
     <Content Include="Views\Setting\UpdateUser.cshtml" />
     <Content Include="Views\Setting\UserPermission.cshtml" />
     <Content Include="Views\Setting\UserPermissionView.cshtml" />
+    <Content Include="Views\Authorization\NoAccess.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -55,9 +55,9 @@ var USERSETTING = (function ($) {
                 return;
             }
 
-            if ($('#Password').val() == '') {
-                NOTIFY.Alert('Password must be required', 'Error');
-                $('#Password').focus();
+            if ($('#AliasName').val() == '') {
+                NOTIFY.Alert('AliasName must be required', 'Error');
+                $('#AliasName').focus();
                 return;
             }
 
@@ -73,11 +73,11 @@ var USERSETTING = (function ($) {
                 return;
             }
 
-            var systemForm = $("form");
+            var userForm = $("form");
             $.ajax({
                 url: rootDir + "Setting/UpdateUser",
                 type: 'POST',
-                data: systemForm.serialize(),
+                data: userForm.serialize(),
                 success: function (result) {
                     if (result.ErrorCode == -1) {                        
                         NOTIFY.Alert(result.ErrorMessage, 'Error');

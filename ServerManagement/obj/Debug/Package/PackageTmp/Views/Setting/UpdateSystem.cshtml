@@ -1,0 +1,26 @@
+﻿@model ServerManagement.Models.SiteModel
+@{
+    ViewBag.Title = "UpdateSystem";
+    Layout = null;
+}
+
+<form>
+<div class="input-control modern text iconic">
+    <input class="full-size" type="text" name="SiteName" id="SiteName" value="@Model.SiteName" />
+    <span class="caption">System Name</span>
+</div>
+<div class="input-control modern iconic">
+    <input class="full-size" type="text" name="Description" id="Description" value="@Model.Description"  />
+    <span class="caption">Description</span>
+</div>
+<br />
+<br />
+<div class="form-actions">
+    <button id="btn-submit" type="button" class="button small-button primary">
+        Submit</button>
+    <button id="btn-cancel" type="button" class="button small-button primary">
+        Cancel</button>
+</div>
+
+<input type="hidden" name="SiteId" id="SiteId" value="@Model.SiteId" />
+</form>

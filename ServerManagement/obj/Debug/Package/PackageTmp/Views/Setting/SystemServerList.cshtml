@@ -1,0 +1,58 @@
+﻿@using ServerManagement.Models
+@model List<SystemServerViewModel>
+@{
+    ViewBag.Title = "System Server";
+    Layout = null;
+    var sites = Model.GroupBy(x => x.SiteId).Select(g => new { SiteId = g.Key, SiteName = g.Select(x => x.SiteName).First() });
+    
+}
+<div class="header-action">
+    <button id="btn-add" class="button small-button primary">
+        Add Server Site</button>
+</div>
+<table>
+    <thead>
+        <tr>
+            <th class="col-id">
+                Id
+            </th>
+            <th>
+                Ip
+            </th>           
+            <th class="col-edit">
+                Edit
+            </th>
+            <th class="col-edit">
+                Remove
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var site in sites)
+        {
+            <tr class="bg-darkCyan fg-white">
+                <td colspan="4">
+                    @site.SiteName
+                </td>
+            </tr>
+            var severs = Model.Where(y => y.SiteId == site.SiteId);
+            foreach (var server in severs)
+            {
+            <tr>
+                <td class="text-align-center">
+                    @server.Id
+                </td>
+                <td class="text-align-center">
+                    @server.ServerIp
+                </td>
+                <td class="text-align-center">
+                    <span class="mif-pencil icon-edit" server-site-id="@server.Id"></span>
+                </td>
+                <td class="text-align-center">
+                    <span class="mif-cancel icon-edit" server-site-id="@server.Id"></span>
+                </td>
+            </tr>
+            }
+        }
+    </tbody>
+</table>

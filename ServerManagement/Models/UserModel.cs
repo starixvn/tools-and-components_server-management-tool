@@ -11,8 +11,10 @@ namespace ServerManagement.Models
 
         public string Username { get; set; }
 
-        public string Password { get; set; }
+        public string AliasName { get; set; }
 
         public string Email { get; set; }
+
+        public bool SuperUser { get; set; }
     }
 }

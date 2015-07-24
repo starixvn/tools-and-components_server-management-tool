@@ -3,6 +3,7 @@ using System.Linq;
 using System.Web.Mvc;
 using ServerManagement.Models;
 using ServerManagement.Services;
+using System;
 
 namespace ServerManagement.Controllers
 {
@@ -25,7 +26,18 @@ namespace ServerManagement.Controllers
 
         public ActionResult Index()
         {
-            var siteList = _siteService.GetSites();
+            var sitePermission = new List<int>();
+            var siteList = new List<SiteModel>();
+            if (CurrentSession != null)
+            {
+                sitePermission = CurrentSession.SitePermission.
+                    Where(x => x.Permission > 0).Select(x => x.SiteId).ToList();
+                siteList = CurrentSession.SuperUser ?
+                    _siteService.GetSites() :
+                    _siteService.GetSites().Where(x => sitePermission.Contains(x.SiteId)).ToList();
+            }
+
+
             var serverList = _serverService.GetServers();
             var serverSiteList = _serverSiteService.GetServerSite();
             var serverSiteResult = _serverSiteResultService.Replies().OrderByDescending(x => x.ReplyDate).Take(serverSiteList.Count);
@@ -52,8 +64,14 @@ namespace ServerManagement.Controllers
                 machineViewModel.Add(new MachinesViewModel
                 {
                     System = site.SiteName,
+                    Id = site.SiteId,
                     ReplyServer = replyServers
                 });
+            }
+
+            if (CurrentSession != null)
+            {
+                ViewBag.AliasName = CurrentSession.AliasName;
             }
 
             return View(machineViewModel);
@@ -81,14 +99,51 @@ namespace ServerManagement.Controllers
         }
 
         [HttpPost]
-        public JsonResult Reboot(string[] serverIps, string[] serverIds)
+        public JsonResult Reboot(string[] serverIds)
         {
-            var servers = serverIps;
             var listResult = new Dictionary<string, Result>();
-            for (int i = 0; i < serverIps.Count(); i++)
+            var sitePermission = new List<string>();
+            var siteNoPermission = new List<string>();
+            var servers = _serverService.GetServers();
+            foreach (var serverId in serverIds)
             {
-                var result = _helper.RebootServer(serverIps[i]);
-                listResult.Add(serverIds[i], result);
+                var siteId = Convert.ToInt32(serverId.Split(':')[0]);
+                var permission = CurrentSession.SitePermission.Where(x => x.SiteId == siteId).Select(x => x.Permission).First();
+
+                if (CurrentSession.SuperUser || permission >= CustomRoles.Admin)
+                {
+                    sitePermission.Add(serverId);
+                }
+                else
+                {
+                    siteNoPermission.Add(serverId);
+                }
+            }
+
+            foreach (var site in sitePermission)
+            {
+                var siteId = Convert.ToInt32(site.Split(':')[0]);
+                var serverId = Convert.ToInt32(site.Split(':')[1]);
+                var serverIp = servers.Where(x => x.ServerId == serverId).First().ServerIp;
+
+                var result = _helper.RebootServer(serverIp);
+                listResult.Add(serverIp, result);
+            }
+
+            foreach (var site in siteNoPermission)
+            {
+                var siteId = Convert.ToInt32(site.Split(':')[0]);
+                var serverId = Convert.ToInt32(site.Split(':')[1]);
+                var serverIp = servers.Where(x => x.ServerId == serverId).First().ServerIp;
+
+                var result = new Result()
+                {
+                    ErrorCode = -1,
+                    ErrorMessage = "No permission in this server"
+                };
+
+                listResult.Add(serverIp, result);
+
             }
 
             return Json(listResult, JsonRequestBehavior.AllowGet);
@@ -97,8 +152,14 @@ namespace ServerManagement.Controllers
         [HttpPost]
         public JsonResult RebootAll()
         {
-            var serverList = _serverService.GetServers();
             var listResult = new Dictionary<string, Result>();
+            var sitePermission = CurrentSession.SitePermission.
+                   Where(x => x.Permission > 1).Select(x => x.SiteId).ToList();
+            var serverIds = CurrentSession.SuperUser ? 
+                _serverSiteService.GetServerSite().Select(x => x.ServerId) :
+                _serverSiteService.GetServerSite().Where(x => sitePermission.Contains(x.SiteId)).Select(x => x.ServerId);
+            
+            var serverList = _serverService.GetServers().Where(x => serverIds.Contains(x.ServerId));
 
             foreach (var server in serverList)
             {

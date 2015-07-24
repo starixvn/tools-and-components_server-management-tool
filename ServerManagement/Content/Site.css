@@ -43,9 +43,8 @@
 table
 {
     width: 100%;
-    
-    }
-    
+}
+
 table tr th
 {
     color: #555;
@@ -53,7 +52,6 @@ table tr th
     font-size: 13px;
     line-height: 20px;
     text-align: center;
-	
 }
 
 table tr .col-edit
@@ -63,7 +61,7 @@ table tr .col-edit
 
 table tr .col-id
 {
-   width: 10%;
+    width: 10%;
 }
 table tr .col-site
 {
@@ -73,40 +71,57 @@ table th, td
 {
     border: 1px solid #ddd;
     padding-left: 10px;
-    
 }
 
 .dialog-title
 {
-    font-size:20px;
-     border-bottom: 1px solid #ddd;
-     padding-bottom:5px;
-    }
+    font-size: 20px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 5px;
+}
 
 .text-align-center
 {
     text-align: center;
-	
-    }
-    
+}
+
 .icon-edit
 {
-    cursor:pointer;
-	
-    }
-.icon-edit:hover {
-	color:Red;
-	
+    cursor: pointer;
+}
+.icon-edit:hover
+{
+    color: Red;
 }
 
 .input-control select
 {
-    position:absolute;
-	
-    }
-    
+    position: absolute;
+}
+
 .shortcut-button
 {
     width: 75px;
     height: 75px;
+}
+
+.image-button.icon-right
+{
+    padding-right: 2px;
+}
+
+.input-control.modern input
+{
+    height: 40px;
+    top: 27px;
+}
+
+.tile-group.three, .tile-group.triple
+{
+    max-width: 480px;
     }
+    
+    .tile-group
+    {
+        margin-left: 34px;
+        }

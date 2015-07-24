@@ -19,8 +19,9 @@ namespace ServerManagement.Services
                     {
                         UserId = Convert.ToInt32(reader["Id"]),
                         Username = reader["username"].ToString(),
-                        Password = reader["password"].ToString(),
-                        Email = reader["email"].ToString()
+                        AliasName = reader["aliasname"].ToString(),
+                        Email = reader["email"].ToString(),
+                        SuperUser = Convert.ToInt32(reader["superuser"]) == 1
                     });
                 }
             }
@@ -33,7 +34,7 @@ namespace ServerManagement.Services
             int errorCode = 0;
             try
             {
-                var sql = "insert into user('username','password','email') values('" + criteria.Username + "','" + criteria.Password + "','" + criteria.Email + "')";
+                var sql = "insert into user('username','alias','email') values('" + criteria.Username + "','" + criteria.AliasName + "','" + criteria.Email + "')";
                 errorCode = UpdateData(sql);
             }
             catch (Exception ex)
@@ -57,7 +58,7 @@ namespace ServerManagement.Services
             int errorCode = 0;
             try
             {
-                var sql = "update user set username='" + criteria.Username + "', password='" + criteria.Password + "',email='" + criteria.Email + "' where id=" + criteria.UserId;
+                var sql = "update user set username='" + criteria.Username + "', aliasname='" + criteria.AliasName + "',email='" + criteria.Email + "' where id=" + criteria.UserId;
                 errorCode = UpdateData(sql);
             }
             catch (Exception ex)

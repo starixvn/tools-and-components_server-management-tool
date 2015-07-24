@@ -1,0 +1,34 @@
+﻿@{
+    ViewBag.Title = "Login";
+        
+}
+<div class="bg-darkTeal login-container">
+    <div class="login-form padding20 block-shadow">
+        <form action="~/Authorization/Login" method="post">
+        <h1 class="text-light">
+            Login to service</h1>
+        <hr class="thin" />
+        <br />
+        <div class="input-control modern text iconic">
+            <input class="full-size" type="text" name="username" id="username"/>
+            <span class="caption">You login</span> <span class="placeholder"></span> <span class="icon mif-user">
+                </span>
+        </div>
+        <div class="input-control modern password iconic" data-role="input">
+            <input type="password" name="password" id="password"/>
+            <span class="caption">You password</span>
+            <span class="placeholder"></span> <span class="icon mif-lock"></span>
+            <button class="button helper-button reveal">
+                <span class="mif-looks"></span>
+            </button>
+        </div>        
+        <br />
+      
+        <div class="form-actions">
+            <button type="submit" class="button primary">
+                Login</button>
+        </div>
+       
+        </form>
+    </div>
+</div>

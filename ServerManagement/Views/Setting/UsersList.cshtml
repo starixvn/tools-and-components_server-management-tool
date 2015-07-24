@@ -17,10 +17,13 @@
                 Username
             </th>
             <th>
-                Password
+                Alias Name
             </th>
               <th>
                 Email
+            </th>
+             <th>
+                Super User
             </th>
             <th class="col-edit">
                 Edit
@@ -38,10 +41,13 @@
                     @user.Username
                 </td>
                 <td>
-                    @user.Password
+                    @user.AliasName
                 </td>
                    <td>
                     @user.Email 
+                </td>
+                 <td class="text-align-center">
+                    @(user.SuperUser ? "Yes" : "NO") 
                 </td>
                 <td class="text-align-center">
                     <span class="mif-pencil icon-edit" user-id="@user.UserId"></span>

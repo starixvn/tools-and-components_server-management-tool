@@ -9,6 +9,8 @@ namespace ServerManagement.Models
     {
         public string System { get; set; }
 
+        public int Id { get; set; }
+
         public List<ReplyServer> ReplyServer { get; set; }
     }
 }

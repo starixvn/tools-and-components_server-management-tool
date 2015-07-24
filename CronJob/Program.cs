@@ -106,7 +106,7 @@ namespace CronJob
 
             if (result < rangeDate)
             {
-                sql = "insert into serversiteresult('serversiteId','replyDate','isresult') values (" + serverSiteId + ",'" + localDate.ToString("MM/dd/yyyy hh:mm:ss tt") + "','" + isResult + "')";
+                sql = "insert into serversiteresult('serversiteId','replyDate','isresult') values (" + serverSiteId + ",'" + localDate.ToString("MM/dd/yyyy HH:mm:ss") + "','" + isResult + "')";
                 
             }
             else
@@ -116,8 +116,8 @@ namespace CronJob
                 var resultID = Convert.ToInt32(command.ExecuteScalar());
 
                 if (resultID != 0)
-                {                    
-                    sql = "update serversiteresult set replyDate='" + localDate.ToString("MM/dd/yyyy hh:mm:ss tt") + "', isresult='" + isResult + "' where id=" + resultID;
+                {
+                    sql = "update serversiteresult set replyDate='" + localDate.ToString("MM/dd/yyyy HH:mm:ss") + "', isresult='" + isResult + "' where id=" + resultID;
                 }
             }
 
