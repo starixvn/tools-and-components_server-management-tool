@@ -19,7 +19,8 @@ namespace ServerManagement.Services
                     {
                         SiteId = Convert.ToInt32(reader["Id"]),
                         SiteName = reader["Name"].ToString(),
-                        Description = reader["Description"].ToString()
+                        Description = reader["Description"].ToString(),
+                        Url = reader["url"].ToString()
                     });
                 }
             }
@@ -32,7 +33,7 @@ namespace ServerManagement.Services
             int errorCode = 0;
             try
             {
-                var sql = "insert into site('name','description') values('" + criteria.SiteName + "','" + criteria.Description + "')";
+                var sql = "insert into site('name','description','url') values('" + criteria.SiteName + "','" + criteria.Description + "','" + criteria.Url + "')";
                 errorCode = UpdateData(sql);
             }
             catch (Exception ex)
@@ -56,7 +57,7 @@ namespace ServerManagement.Services
             int errorCode = 0;
             try
             {
-                var sql = "update site set name='" + criteria.SiteName + "', description='" + criteria.Description + "' where id=" + criteria.SiteId;
+                var sql = "update site set name='" + criteria.SiteName + "', description='" + criteria.Description + "', url='" + criteria.Url + "' where id=" + criteria.SiteId;
                 errorCode = UpdateData(sql);
             }
             catch (Exception ex)

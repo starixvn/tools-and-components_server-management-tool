@@ -53,7 +53,7 @@ namespace ServerManagement.Services
 
         private SQLiteConnection ConnectionString(string dataSourcePath)
         {
-            var sqliteConn = new SQLiteConnection("Data Source=" + dataSourcePath + ";Version=3;");
+            var sqliteConn = new SQLiteConnection("Data Source=" + dataSourcePath + ";Version=3;PRAGMA journal_mode=WAL;");
 
             if (sqliteConn.State == ConnectionState.Closed)
             {

@@ -1,0 +1,38 @@
+﻿@{
+    ViewBag.Title = "ServiceList";
+    Layout = null;
+}
+@model ServerManagement.Models.ServiceManagementViewModel
+<div class="header-action input-control select">
+    @Html.DropDownListFor(model => model.SiteId, new SelectList(Model.Sites, "SiteId", "SiteName"))
+</div>
+<div class="header-action input-control select">
+    @Html.DropDownListFor(model => model.ServerId, new SelectList(Model.Servers, "ServerId", "ServerIp"))
+</div>
+<div class="header-action input-control select">
+    <select id="filter-service">
+        <option value="1">From Server</option>
+        <option value="0">From DB</option>
+    </select>
+</div>
+<table>
+    <thead>
+        <tr>
+            <th>
+                Display Name
+            </th>
+            <th>
+                Service Name
+            </th>
+            <th class="col-edit">
+                Status
+            </th>
+            <th class="col-edit">
+                Update
+            </th>
+        </tr>
+    </thead>
+    <tbody id="service-content">
+        @Html.Partial("ServiceListView", Model.Services)
+    </tbody>
+</table>

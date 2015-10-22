@@ -8,7 +8,7 @@ namespace ServerManagement.Services
     {
         public List<ReplyModel> Replies()
         {
-            var sql = "select * from serversiteresult";
+            var sql = "select * from serverstatus";
             var replies = new List<ReplyModel>();
 
             using (var reader = QueryData(sql))
@@ -27,5 +27,7 @@ namespace ServerManagement.Services
 
             return replies;
         }
+
+       
     }
 }

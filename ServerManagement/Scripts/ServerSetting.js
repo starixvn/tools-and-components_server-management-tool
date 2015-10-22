@@ -8,7 +8,7 @@ var SERVERSETTING = (function ($) {
         $("#server-setting").on('click', function () {
             serverSettingObject.ServerList();
             showSettings();
-        });        
+        });
     };
 
     serverSettingObject.ServerList = function () {
@@ -16,7 +16,7 @@ var SERVERSETTING = (function ($) {
             url: rootDir + "Setting/ServerList",
             type: 'GET',
             beforeSend: function () {
-                
+
             },
             success: function (data) {
                 DIALOG.ShowDialog(data, 'Server Management');
@@ -24,6 +24,8 @@ var SERVERSETTING = (function ($) {
             complete: function () {
                 serverSettingObject.AddServer();
                 serverSettingObject.EditServer();
+                serverSettingObject.UpdateSpecServer();
+                
             }
         });
     };
@@ -34,7 +36,7 @@ var SERVERSETTING = (function ($) {
                 url: rootDir + "Setting/UpdateServer",
                 type: 'GET',
                 beforeSend: function () {
-                   
+
                 },
                 success: function (data) {
                     DIALOG.ShowDialog(data, 'Add Server');
@@ -67,7 +69,7 @@ var SERVERSETTING = (function ($) {
                 type: 'POST',
                 data: systemForm.serialize(),
                 success: function (result) {
-                    if (result.ErrorCode == -1) {                        
+                    if (result.ErrorCode == -1) {
                         NOTIFY.Alert(result.ErrorMessage, 'Error');
                     }
                     else {
@@ -108,6 +110,31 @@ var SERVERSETTING = (function ($) {
             });
         });
     };
+
+    serverSettingObject.UpdateSpecServer = function () {
+        $('.spec').on('click', function () {
+            var $this = $(this);
+
+            $.ajax({
+                url: rootDir + "Setting/UpdateSpecServer",
+                type: 'POST',
+                data: 'serverId=' + $this.attr('server-id'),
+                beforeSend: function () {
+
+                },
+                success: function (result) {
+                    if (result.ErrorCode == -1) {
+                        NOTIFY.Alert(result.ErrorMessage, 'Error');
+                    }
+                },
+                complete: function () {
+                    serverSettingObject.ServerList();
+                }
+            });
+        });
+    };
+
+    
 
     return serverSettingObject;
 } (jQuery));

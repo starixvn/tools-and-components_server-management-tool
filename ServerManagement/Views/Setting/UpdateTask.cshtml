@@ -1,0 +1,25 @@
+﻿@{
+    ViewBag.Title = "Update Task";
+    Layout = null;
+}
+@model ServerManagement.Models.TaskModel
+<form>
+<div class="input-control modern text iconic">
+    <input class="full-size" type="text" name="TaskName" id="TaskName" value="@Model.TaskName" />
+    <span class="caption">Task Name</span>
+</div>
+<div class="input-control modern text iconic">
+    <input class="full-size" type="text" name="Action" id="Action" value="@Model.Action" />
+    <span class="caption">Task Action</span>
+</div>
+<br />
+<br />
+<div class="form-actions">
+    <button id="btn-submit" type="button" class="button small-button primary">
+        Submit</button>
+    <button id="btn-cancel" type="button" class="button small-button primary">
+        Cancel</button>
+</div>
+
+<input type="hidden" name="TaskId" id="TaskId" value="@Model.TaskId" />
+</form>

@@ -36,7 +36,7 @@ namespace CronJob
             }
         }
 
-        public static bool PingHost(string nameOrAddress)
+        private static bool PingHost(string nameOrAddress)
         {
             Ping pinger = new Ping();
             try
@@ -49,11 +49,11 @@ namespace CronJob
             {
                 return false;
             }
-        }
+        }                
 
         private static SQLiteConnection ConnectionString(string dataSourcePath)
         {
-            var sqliteConn = new SQLiteConnection("Data Source=" + dataSourcePath + ";Version=3;");
+            var sqliteConn = new SQLiteConnection("Data Source=" + dataSourcePath + ";Version=3;PRAGMA journal_mode=WAL;");
 
 
             if (sqliteConn.State == ConnectionState.Closed)
@@ -99,25 +99,25 @@ namespace CronJob
 
         private static void UpdateReply(int serverSiteId, DateTime localDate, bool isResult, int rangeDate)
         {
-            string sql = "select count(*) from serversiteresult where serversiteid =" + serverSiteId + " and ReplyDate BETWEEN '" + localDate.ToString("MM/dd/yyyy") + "' AND '" + localDate.AddDays(1).ToString("MM/dd/yyyy") + "'";
+            string sql = "select count(*) from serverstatus where serversiteid =" + serverSiteId + " and ReplyDate BETWEEN '" + localDate.ToString("MM/dd/yyyy") + "' AND '" + localDate.AddDays(1).ToString("MM/dd/yyyy") + "'";
 
             SQLiteCommand command = new SQLiteCommand(sql, sqliteConnection);
             var result = Convert.ToInt32(command.ExecuteScalar());
 
             if (result < rangeDate)
             {
-                sql = "insert into serversiteresult('serversiteId','replyDate','isresult') values (" + serverSiteId + ",'" + localDate.ToString("MM/dd/yyyy HH:mm:ss") + "','" + isResult + "')";
+                sql = "insert into serverstatus('serversiteId','replyDate','isresult') values (" + serverSiteId + ",'" + localDate.ToString("MM/dd/yyyy HH:mm:ss") + "','" + isResult + "')";
                 
             }
             else
             {
-                sql = "select id from serversiteresult where ServerSiteId = " + serverSiteId + " order by replyDate asc limit 1";
+                sql = "select id from serverstatus where ServerSiteId = " + serverSiteId + " order by replyDate asc limit 1";
                 command = new SQLiteCommand(sql, sqliteConnection);
                 var resultID = Convert.ToInt32(command.ExecuteScalar());
 
                 if (resultID != 0)
                 {
-                    sql = "update serversiteresult set replyDate='" + localDate.ToString("MM/dd/yyyy HH:mm:ss") + "', isresult='" + isResult + "' where id=" + resultID;
+                    sql = "update serverstatus set replyDate='" + localDate.ToString("MM/dd/yyyy HH:mm:ss") + "', isresult='" + isResult + "' where id=" + resultID;
                 }
             }
 

@@ -6,6 +6,8 @@ using System.Web.Mvc;
 using System.Web.Security;
 using ServerManagement.Services;
 using ServerManagement.Models;
+using Sunplus.UMControllerLibrary;
+using System.Configuration;
 
 namespace ServerManagement.Controllers
 {
@@ -14,6 +16,7 @@ namespace ServerManagement.Controllers
         private AuthenticationService _authenticationService;
         private UserService _userService;
         private UserSiteService _userSiteService;
+        
 
         public AuthorizationController()
         {
@@ -42,7 +45,8 @@ namespace ServerManagement.Controllers
                 {
                     var user = users.Where(x => x.Username == username).First();
                     var sitePermission = _userSiteService.GetUserSite().Where(x => x.UserId == user.UserId)
-                        .Select(y => new SitePermissionViewModel {
+                        .Select(y => new SitePermissionViewModel
+                        {
                             SiteId = y.SiteId,
                             Permission = y.Permission
                         }).ToList();
@@ -55,7 +59,7 @@ namespace ServerManagement.Controllers
                         SitePermission = sitePermission
                     };
 
-                     SessionService.CurrentSession = userPermission;
+                    SessionService.CurrentSession = userPermission;
                     FormsAuthentication.RedirectFromLoginPage(username, true);
 
                     return Redirect("~/home/index");
@@ -84,6 +88,6 @@ namespace ServerManagement.Controllers
             Session.Abandon();
 
             return Json(new { ErrorCode = 0 }, JsonRequestBehavior.AllowGet);
-        }
+        }        
     }
 }

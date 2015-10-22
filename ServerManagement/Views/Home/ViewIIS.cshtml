@@ -1,0 +1,47 @@
+﻿@{
+    ViewBag.Title = "ViewIIS";
+    Layout = null;
+}
+@model List<ServerManagement.Models.IISInformationViewModel>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Site Name[Site ID]
+            </th>
+            <th>
+                PhysicalPath
+            </th>
+            <th>
+                Binding Port
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var site in Model)
+        {
+            <tr class="bg-darkTeal fg-white">
+                <td>@(site.SiteName + " [" + site.SiteId + "]")
+                </td>
+                <td>@site.PhysicalPath
+                </td>
+                <td>@string.Join(", ", site.Ports)
+                </td>
+            </tr>
+            foreach (var vir in site.VirtualDirectory)
+            {
+                if (vir.SiteName != "/")
+                {
+            <tr>
+                <td class="padding20 no-padding-right no-padding-top no-padding-bottom">@vir.SiteName
+                </td>
+                <td>@vir.PhysicalPath
+                </td>
+                <td>
+                </td>
+            </tr>
+                }
+            }
+        }
+    </tbody>
+</table>

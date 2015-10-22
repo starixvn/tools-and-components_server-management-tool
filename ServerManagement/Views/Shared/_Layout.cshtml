@@ -52,6 +52,7 @@
 
         }
     </style>
+
 </head>
 <body>
     <div class="charm right-side padding20 bg-grayDark" id="charmSettings">
@@ -127,6 +128,12 @@
             <div class="button shortcut-button" id="system-server-setting" title="System Server Management">
                 <span class="icon mif-shrink2"></span>
             </div>
+            <div class="button shortcut-button" id="service-setting" title="Service Management">
+                <span class="icon mif-widgets"></span>
+            </div>
+             <div class="button shortcut-button" id="task-setting" title="Task Management">
+                <span class="icon mif-list"></span>
+            </div>
             <div class="button shortcut-button" id="user-setting" title="User Management">
                 <span class="icon mif-users"></span>
             </div>
@@ -135,9 +142,55 @@
             </div>
         </div>
     </div>
+    <div class="tile-area tile-area-scheme-dark fg-white">
+    <h1 class="tile-area-title">
+        Server Management    
+        </h1>        
+    <div class="tile-area-controls">
+        <ul class="t-menu horizontal compact bg-transparent">
+            <li>
+                <button class="image-button icon-right bg-transparent fg-white no-border">
+                    <span class="sub-header no-margin text-light">@ViewBag.AliasName</span>
+                </button>
+            </li>  
+            <li><a href="#" class="square-button bg-transparent fg-white bg-hover-dark no-border dropdown-toggle">
+                <span class="icon mif-search fg-white"></span></a>
+                <ul class="t-menu compact" data-role="dropdown">
+                    <li><a href="~/Home/Service" title="Service monitoring"><span class="icon mif-air"></span></a>
+                    </li>
+                    <li><a href="~/Home/Index" title="Server monitoring"><span class="icon mif-laptop"></span></a>
+                    </li>
+                </ul>
+            </li>          
+            <li><a href="#" class="square-button bg-transparent fg-white bg-hover-dark no-border dropdown-toggle">
+                <span class="icon mif-cogs fg-white"></span></a>
+                <ul class="t-menu compact" data-role="dropdown">
+                    <li><a href="#" title="Reboot [n] device"><span class="icon mif-undo"></span></a>
+                    </li>
+                    <li><a href="#" title="Reboot all device"><span class="icon mif-loop2"></span></a>
+                    </li>
+                </ul>
+            </li>
+            <li><a href="#" class="square-button bg-transparent fg-white bg-hover-dark no-border dropdown-toggle">
+                <span class="icon mif-cog fg-white"></span></a>
+                <ul class="t-menu compact" data-role="dropdown">
+                    <li><a href="#" title="Setting" onclick="showSettings()"><span class="icon mif-tools">
+                    </span></a></li>
+                    <li><a href="#" title="Change background color" onclick="showColorSetting()"><span
+                        class="icon mif-looks"></span></a></li>
+                </ul>
+            </li>
+            <li><a href="#" class="square-button bg-transparent fg-white bg-hover-dark no-border dropdown-toggle">
+                <span class="icon mif-user bg-transparent"></span></a>
+                <ul class="t-menu compact" data-role="dropdown">
+                    <li><a href="#" title="Sign out"><span class="icon mif-switch"></span></a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
     @RenderBody()
     <div id="dialog" class="padding20 dialog" data-windows-style="true" data-close-button="true"
-        data-role="dialog" data-overlay="false">
+        data-role="dialog" data-overlay="true">
         <div class="container">
             <h1 class="dialog-title">
                 <span></span>
@@ -146,6 +199,9 @@
             </p>
         </div>
         <span class="dialog-close-button"></span>
+    </div>
+    <div id='ajax_loader' class="ajax-loading">
+        <img alt="" src="~/Content/images/723.GIF"/>
     </div>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/moment")
@@ -292,6 +348,18 @@
     </script>
     <script type="text/javascript">
         var rootDir = "@Url.Content("~/")";
+    </script>
+    <script type="text/ecmascript">
+        $(document).ready(function () {
+            CORE.initialize();          
+            SYSTEMSETTING.initialize();
+            SERVERSETTING.initialize();
+            SYSTEMSERVERSETTING.initialize();
+            USERSETTING.initialize();
+            USERSITESETTING.initialize();
+            SERVICESETTING.initialize();
+            TASKSETTING.initialize();
+        });
     </script>
     @RenderSection("scripts", required: false)
 </body>

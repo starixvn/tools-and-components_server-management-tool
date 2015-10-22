@@ -4,53 +4,12 @@
 @model List<ServerManagement.Models.MachinesViewModel>
 @section scripts{
     <script type="text/ecmascript">
-        $(document).ready(function () {
-            SITE.initialize();
-            SYSTEMSETTING.initialize();
-            SERVERSETTING.initialize();
-            SYSTEMSERVERSETTING.initialize();
-            USERSETTING.initialize();
-            USERSITESETTING.initialize();
+        $(document).ready(function () {            
+            SITE.initialize();            
         });
     </script>
 }
-<div class="tile-area tile-area-scheme-dark fg-white">
-    <h1 class="tile-area-title">
-        Server Management</h1>
-    <div class="tile-area-controls">
-        <ul class="t-menu horizontal compact bg-transparent">
-            <li>
-                <button class="image-button icon-right bg-transparent fg-white no-border">
-                    <span class="sub-header no-margin text-light">@ViewBag.AliasName</span>
-                </button>
-            </li>
-            <li><a href="#" class="square-button bg-transparent fg-white bg-hover-dark no-border dropdown-toggle">
-                <span class="icon mif-user bg-transparent"></span></a>
-                <ul class="t-menu compact" data-role="dropdown">
-                    <li><a href="#" title="Sign out"><span class="icon mif-switch"></span></a>
-                    </li>
-                </ul>
-            </li>
-            <li><a href="#" class="square-button bg-transparent fg-white bg-hover-dark no-border dropdown-toggle">
-                <span class="icon mif-cogs fg-white"></span></a>
-                <ul class="t-menu compact" data-role="dropdown">
-                    <li><a href="#" title="Reboot [n] device"><span class="icon mif-undo"></span></a>
-                    </li>
-                    <li><a href="#" title="Reboot all device"><span class="icon mif-loop2"></span></a>
-                    </li>
-                </ul>
-            </li>
-            <li><a href="#" class="square-button bg-transparent fg-white bg-hover-dark no-border dropdown-toggle">
-                <span class="icon mif-cog fg-white"></span></a>
-                <ul class="t-menu compact" data-role="dropdown">
-                    <li><a href="#" title="Setting" onclick="showSettings()"><span class="icon mif-tools">
-                    </span></a></li>
-                    <li><a href="#" title="Change background color" onclick="showColorSetting()"><span
-                        class="icon mif-looks"></span></a></li>
-                </ul>
-            </li>
-        </ul>
-    </div>
+
     @foreach (var machine in Model)
     {
         <div class="tile-group triple">
@@ -64,13 +23,27 @@
                         backgroup = "bg-red";
                     }
                 
-                    <div id="server-@reply.ServerSiteId" name="server" site-id="@machine.Id" server-id="@reply.ServerSiteId" class="tile @backgroup fg-white" data-role="tile">
-                        <div class="tile-content iconic">
-                            <span id="icon-@reply.ServerSiteId" class="icon mif-display"></span>
+                    <div id="server-@reply.ServerId" name="server" site-id="@machine.Id" server-id="@reply.ServerId" class="tile @backgroup fg-white" data-role="tile">
+                        <div class="tile-content iconic slide-down">
+                            <span id="icon-@reply.ServerSiteId" class="icon mif-display server-icon"></span>
+                            <div class="slide-over bg-green text-small padding10">
+                                <div class="tile-menu select-server" server-id="@reply.ServerId">
+                                    Select Server
+                                </div>
+                                <div class="tile-menu view-spec" server-id="@reply.ServerId">
+                                    Specification
+                                </div>
+                                 <div class="tile-menu view-service" server-id="@reply.ServerId" site-id="@machine.Id">
+                                    Services
+                                </div>
+                                <div class="tile-menu view-iis" server-id="@reply.ServerId">
+                                    IIS
+                                </div>
+                            </div>
                         </div>
                         <span class="tile-label">
-                            <p id="server-name-@reply.ServerSiteId" class="tertiary-text fg-white no-margin">@reply.ServerIp</p>
-                            <p id="time-@reply.ServerSiteId" class="tertiary-text fg-lime no-margin">@Convert.ToDateTime(reply.ReplyTime).ToShortTimeString()</p>
+                            <p id="server-name-@reply.ServerId" class="tertiary-text fg-white no-margin">@reply.ServerIp</p>
+                            <p id="time-@reply.ServerId" class="tertiary-text fg-lime no-margin">@Convert.ToDateTime(reply.ReplyTime).ToShortTimeString()</p>
                         </span>
                     </div>
                 }

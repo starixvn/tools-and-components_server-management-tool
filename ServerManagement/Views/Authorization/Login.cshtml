@@ -1,7 +1,9 @@
 ﻿@{
     ViewBag.Title = "Login";
-        
+    Layout = null;
 }
+    @Styles.Render("~/Content/themes/base/css")
+    @Styles.Render("~/Content/css")
 <div class="bg-darkTeal login-container">
     <div class="login-form padding20 block-shadow">
         <form action="~/Authorization/Login" method="post">
@@ -11,12 +13,12 @@
         <br />
         <div class="input-control modern text iconic">
             <input class="full-size" type="text" name="username" id="username"/>
-            <span class="caption">You login</span> <span class="placeholder"></span> <span class="icon mif-user">
+            <span class="placeholder"></span> <span class="icon mif-user">
                 </span>
         </div>
         <div class="input-control modern password iconic" data-role="input">
             <input type="password" name="password" id="password"/>
-            <span class="caption">You password</span>
+            
             <span class="placeholder"></span> <span class="icon mif-lock"></span>
             <button class="button helper-button reveal">
                 <span class="mif-looks"></span>

@@ -1,0 +1,46 @@
+﻿@model List<ServerManagement.Models.TaskModel>
+@{
+    ViewBag.Title = "Task List";
+    Layout = null;
+}
+<div class="header-action">
+    <button id="btn-add" class="button small-button primary">
+        Add Task</button>
+</div>
+<table>
+    <thead>
+        <tr>
+            <th class="col-id">
+                Id
+            </th>
+            <th>
+                Task Name
+            </th>
+            <th>
+                Action
+            </th>
+            <th class="col-edit text-align-center">
+                Edit
+            </th>                   
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var task in Model)
+        {
+            <tr>
+                <td class="text-align-center">
+                    @task.TaskId                   
+                </td>
+                <td>
+                    @task.TaskName
+                </td>
+                <td>
+                    @task.Action
+                </td>
+                <td class="text-align-center">
+                    <span class="mif-pencil icon-edit" task-id="@task.TaskId"></span>
+                </td>                            
+            </tr>
+        }
+    </tbody>
+</table>

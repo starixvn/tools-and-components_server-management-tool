@@ -1,0 +1,30 @@
+﻿@{
+    ViewBag.Title = "ViewSpec";
+    Layout = null;
+
+    var disks = Model.Disk.Split('|');
+    
+}
+@model ServerManagement.Models.ServerModel
+<div class="listview" data-role="listview">
+    <div class="list-group">
+        <span class="list-group-toggle">System</span>
+        <div class="list-group-content">
+            <div class="list">Ip: @Model.ServerIp</div>
+            <div class="list">Host Name: @Model.HostName</div>
+            <div class="list">OS Version: @Model.OperatingSystem @Model.Version</div>
+            <div class="list">CPU: @Model.CPU</div>
+            <div class="list">RAM: @Model.Memory</div>
+            <div class="list">Internet Information Service(IIS) version: @Model.IISVersion</div>
+            <div class="list">.Net Framework latest version: @Model.DotNetFrameworkVersion</div>
+        </div>
+    </div>
+    <div class="list-group">
+        <span class="list-group-toggle">Disk</span>
+        <div class="list-group-content">
+            @foreach (string disk in disks)
+            {
+                <div class="list">@Html.Raw(disk)</div>
+            }
+        </div>
+    </div>

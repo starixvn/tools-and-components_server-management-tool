@@ -14,5 +14,11 @@ namespace ServerManagement.Models
         public string ReplyDate { get; set; }
 
         public bool IsResult { get; set; }
+
+        public string BootUpTime { get; set; }
+
+        public int ServerId { get; set; }
+
+        public UnderMaintenanceModel UnderMaintenance { get; set; }
     }
 }

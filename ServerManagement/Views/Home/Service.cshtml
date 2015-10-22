@@ -1,0 +1,36 @@
+﻿@{
+    ViewBag.Title = "Service";
+}
+@model List<ServerManagement.Models.ServiceManagementModel>
+@section scripts{
+    <script type="text/ecmascript">
+        $(document).ready(function () {
+            SERVICE.initialize();
+        });
+    </script>
+}
+<div class="page-content">
+    <table>
+        <thead>
+            <tr>
+                
+                <th class="fg-white">
+                    Service Name
+                </th>
+                <th style="width: 150px" class="fg-white">
+                    Status
+                </th>
+                <th class="fg-white" style="width: 250px">
+                    Site
+                </th>
+                <th class="fg-white" style="width: 250px">
+                    Server
+                </th>
+                
+            </tr>
+        </thead>
+        <tbody id="service-monitor-list">
+            @Html.Partial("ServiceListView", Model)
+        </tbody>
+    </table>
+</div>

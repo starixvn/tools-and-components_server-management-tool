@@ -9,6 +9,8 @@ namespace ServerManagement.Models
     {
         public string ServerIp { get; set; }
 
+        public int ServerId { get; set; }
+
         public string ReplyTime { get; set; }
 
         public bool IsFail { get; set; }

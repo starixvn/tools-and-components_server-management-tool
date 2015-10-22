@@ -43,9 +43,21 @@
       <HintPath>..\packages\EntityFramework.6.0.0\lib\net40\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="IBCFile, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.File.1.0.0\lib\net40\IBCFile.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Web.Administration, Version=7.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Administration.7.0.0.0\lib\net20\Microsoft.Web.Administration.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="RSACryptoPad, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\RSACryptoPad.1.0.0.0\lib\net40\RSACryptoPad.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SPSRemoting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SPSRemoting.1.0.0\lib\net40\SPSRemoting.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -65,6 +77,8 @@
     </Reference>
     <Reference Include="System.DirectoryServices.AccountManagement" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -130,6 +144,10 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
+    <Reference Include="UMControllerLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\UMControllerLibrary.1.0.0\lib\net40\UMControllerLibrary.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="WebGrease">
       <Private>True</Private>
       <HintPath>..\packages\WebGrease.1.1.0\lib\WebGrease.dll</HintPath>
@@ -149,13 +167,23 @@
     <Compile Include="Controllers\Helper.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\JoinExtension.cs" />
+    <Compile Include="Models\SiteTaskModel.cs" />
+    <Compile Include="Models\IISInformationViewModel.cs" />
+    <Compile Include="Models\ServerSpecModel.cs" />
+    <Compile Include="Models\ServiceManagementModel.cs" />
+    <Compile Include="Models\ServiceManagementViewModel.cs" />
     <Compile Include="Models\SitePermissionViewModel.cs" />
+    <Compile Include="Models\TaskModel.cs" />
+    <Compile Include="Models\UnderMaintenanceModel.cs" />
     <Compile Include="Models\UserPermissionModel.cs" />
     <Compile Include="Models\UserPermissionViewModel.cs" />
     <Compile Include="Models\UserSiteModel.cs" />
     <Compile Include="Models\UserSiteViewModel.cs" />
+    <Compile Include="Services\SiteTaskService.cs" />
+    <Compile Include="Services\TaskService.cs" />
     <Compile Include="Services\CustomRoles.cs" />
     <Compile Include="Services\RolesAttribute.cs" />
+    <Compile Include="Services\ServerSpecService.cs" />
     <Compile Include="Services\SessionService.cs" />
     <Compile Include="Services\UserSiteService.cs" />
     <Compile Include="Services\ServerSiteResultService.cs" />
@@ -181,15 +209,23 @@
     <Compile Include="Services\ServerSiteService.cs" />
     <Compile Include="Services\SiteService.cs" />
     <Compile Include="Services\UserService.cs" />
+    <Compile Include="Services\WindowsServiceService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\ServerList.xml" />
     <Content Include="Content\font-awesome-4.3.0\css\font-awesome.css" />
     <Content Include="Content\font-awesome-4.3.0\css\font-awesome.min.css" />
+    <Content Include="Content\images\723.GIF" />
     <Content Include="Content\metro-bootstrap.css" />
     <Content Include="Content\metro-bootstrap.min.css" />
     <Content Include="Content\metro-icons.css" />
     <Content Include="Content\metro-icons.min.css" />
+    <Content Include="Content\metro-responsive.css" />
+    <Content Include="Content\metro-responsive.min.css" />
+    <Content Include="Content\metro-rtl.css" />
+    <Content Include="Content\metro-rtl.min.css" />
+    <Content Include="Content\metro-schemes.css" />
+    <Content Include="Content\metro-schemes.min.css" />
     <Content Include="Content\metro.css" />
     <Content Include="Content\metro.min.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -248,6 +284,9 @@
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\TaskSetting.js" />
+    <Content Include="Scripts\Service.js" />
+    <Content Include="Scripts\ServiceSetting.js" />
     <Content Include="Scripts\UserSiteSetting.js" />
     <Content Include="Scripts\UserSetting.js" />
     <Content Include="Scripts\Library\Select2\css\select2.css" />
@@ -327,7 +366,7 @@
     <Content Include="Scripts\Library\moment-with-locales.min.js" />
     <Content Include="Scripts\Library\moment.js" />
     <Content Include="Scripts\Library\moment.min.js" />
-    <Content Include="Scripts\Script.js" />
+    <Content Include="Scripts\Site.js" />
     <Content Include="Scripts\Library\_references.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -491,6 +530,15 @@
     <Content Include="Views\Setting\UserPermission.cshtml" />
     <Content Include="Views\Setting\UserPermissionView.cshtml" />
     <Content Include="Views\Authorization\NoAccess.cshtml" />
+    <Content Include="Views\Home\ViewSpec.cshtml" />
+    <Content Include="Views\Home\ViewIIS.cshtml" />
+    <Content Include="Views\Setting\ServiceList.cshtml" />
+    <Content Include="Views\Setting\ServiceListView.cshtml" />
+    <Content Include="Views\Home\ViewService.cshtml" />
+    <Content Include="Views\Home\Service.cshtml" />
+    <Content Include="Views\Home\ServiceListView.cshtml" />
+    <Content Include="Views\Setting\TaskList.cshtml" />
+    <Content Include="Views\Setting\UpdateTask.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -508,7 +556,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>49442</DevelopmentServerPort>
+          <DevelopmentServerPort>59599</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>

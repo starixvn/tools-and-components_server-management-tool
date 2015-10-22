@@ -1,0 +1,22 @@
+﻿@{
+    ViewBag.Title = "ServiceListView";
+    Layout = null;
+}
+@model List<ServerManagement.Models.ServiceManagementModel>
+@foreach (var item in Model)
+{
+    <tr>
+        <td>
+            @item.DisplayName
+        </td>
+        <td>
+            @item.ServiceName
+        </td>
+        <td>
+            @(item.Status == 1 ? "Stopped" : "Running")
+        </td>
+        <td class="text-align-center">
+            <span class="@(item.InDB ? "mif-move-up" : "mif-file-download") icon-update service" data-service-name='@item.ServiceName' data-service-display-name='@item.DisplayName' data-service-status='@item.Status'></span>
+        </td>
+    </tr>
+}

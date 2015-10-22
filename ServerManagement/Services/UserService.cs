@@ -34,7 +34,7 @@ namespace ServerManagement.Services
             int errorCode = 0;
             try
             {
-                var sql = "insert into user('username','alias','email') values('" + criteria.Username + "','" + criteria.AliasName + "','" + criteria.Email + "')";
+                var sql = "insert into user('username','aliasname','email','superuser') values('" + criteria.Username + "','" + criteria.AliasName + "','" + criteria.Email + "',0)";
                 errorCode = UpdateData(sql);
             }
             catch (Exception ex)

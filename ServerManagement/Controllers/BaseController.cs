@@ -3,11 +3,15 @@ using System.Web.Mvc;
 using System.Web.Security;
 using ServerManagement.Models;
 using ServerManagement.Services;
+using Sunplus.UMControllerLibrary;
+using System.Configuration;
 
 namespace ServerManagement.Controllers
 {
     public class BaseController : Controller
     {
+        private UMBusiness _umService = new UMBusiness();
+
         protected override void OnAuthorization(AuthorizationContext filterContext)
         {
             if (!HttpContext.User.Identity.IsAuthenticated || CurrentSession == null)
@@ -40,6 +44,19 @@ namespace ServerManagement.Controllers
             //}
 
             base.OnActionExecuting(filterContext);
+        }
+
+        public UnderMaintenanceModel GetUnderMaintenance()
+        {
+            var underMaintenanceInfo = new UnderMaintenanceModel();
+            var dateFrom = underMaintenanceInfo.TimeFrom;
+            var dateTo = underMaintenanceInfo.TimeTo;
+
+            underMaintenanceInfo.Status = _umService.isUnderMaintainence(Sites.Agency, ConfigurationManager.AppSettings["UnderMaintenanceUrl"], ref dateFrom, ref dateTo);
+            underMaintenanceInfo.TimeFrom = dateFrom;
+            underMaintenanceInfo.TimeTo = dateTo;
+
+            return underMaintenanceInfo;
         }
     }
 }

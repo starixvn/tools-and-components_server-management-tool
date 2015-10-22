@@ -23,14 +23,17 @@ namespace ServerManagement
 
             bundles.Add(new ScriptBundle("~/bundles/scripts").Include(
                       "~/Scripts/core.js",
-                      "~/Scripts/script.js",
+                      "~/Scripts/site.js",
+                       "~/Scripts/service.js",
                       "~/Scripts/Dialog.js",
                       "~/Scripts/SystemSetting.js",
                       "~/Scripts/Notify.js",
                       "~/Scripts/ServerSetting.js",
+                      "~/Scripts/TaskSetting.js",
                       "~/Scripts/SystemServerSetting.js",
                       "~/Scripts/UserSetting.js",
-                      "~/Scripts/UserSiteSetting.js"));
+                      "~/Scripts/UserSiteSetting.js",
+                      "~/Scripts/ServiceSetting.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/site.css"));
 
@@ -38,6 +41,7 @@ namespace ServerManagement
                         "~/Content/font-awesome-4.3.0/css/font-awesome.css",
                         "~/Content/metro.css",
                         "~/Content/metro-icons.css",
+                        "~/Content/metro-responsive.css",
                         "~/Scripts/Library/Select2/css/select2.css"
                         ));
         }
