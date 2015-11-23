@@ -1,7 +1,0 @@
-D:\Projects\Tools\ServerManagement\ServerManagementService\bin\Debug\ServerManagementService.exe.config
-D:\Projects\Tools\ServerManagement\ServerManagementService\bin\Debug\ServerManagementService.exe
-D:\Projects\Tools\ServerManagement\ServerManagementService\bin\Debug\ServerManagementService.pdb
-D:\Projects\Tools\ServerManagement\ServerManagementService\obj\x86\Debug\ServerManagementService.exe
-D:\Projects\Tools\ServerManagement\ServerManagementService\obj\x86\Debug\ServerManagementService.pdb
-D:\Projects\Tools\ServerManagement\ServerManagementService\obj\x86\Debug\ServerManagementService.ProjectInstaller.resources
-D:\Projects\Tools\ServerManagement\ServerManagementService\obj\x86\Debug\ServerManagementService.csproj.GenerateResource.Cache
