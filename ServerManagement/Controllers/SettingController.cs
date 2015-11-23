@@ -1,8 +1,8 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using ServerManagement.Models;
 using ServerManagement.Services;
-using System.Collections.Generic;
 
 namespace ServerManagement.Controllers
 {
@@ -500,7 +500,7 @@ namespace ServerManagement.Controllers
                 .Select(a => new SiteTaskModel
                 {
                     SiteId = a.mySiteTask.SiteId,
-                    TaskName = a.myTask.TaskName,
+                    //TaskName = a.myTask.TaskName,
                     TaskId = a.myTask.TaskId,
 
                 }).ToList();
